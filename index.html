@@ -1,1 +1,33 @@
-placeholder
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mywebsitehosting</title>
+<style>
+:root{--ink:#14161c;--muted:#6b7180;--line:#dfe3ea;--bg:#fff;--soft:#f7f9fc;--accent:#1f4fd8;--accent-soft:#e8eeff;
+--mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;--max:900px}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.65}
+.wrap{width:100%;max-width:var(--max);margin-inline:auto;padding:64px 24px}
+.eyebrow{display:inline-block;font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.11em;color:var(--accent);background:var(--accent-soft);border:1px solid var(--line);padding:.3rem .6rem;border-radius:999px;margin:0 0 1.4rem}
+h1{font-size:clamp(2rem,5.5vw,3rem);letter-spacing:-.03em;margin:0 0 1rem;line-height:1.14}
+h1 .hl{background:var(--accent);color:#fff;padding:0 .16em;border-radius:4px}
+.lede{color:var(--muted);font-size:1.06rem;max-width:58ch}
+.card{margin-top:2.4rem;border:1px solid var(--line);background:var(--soft);border-radius:10px;padding:1.2rem 1.3rem}
+.card p{margin:0;font-family:var(--mono);font-size:.86rem;color:var(--muted)}
+footer{border-top:1px solid var(--line);margin-top:3rem;padding:1.4rem 24px;text-align:center;font-family:var(--mono);font-size:.76rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Live</p>
+  <h1>A site on a domain <span class="hl">I own</span>.</h1>
+  <p class="lede">This page is a single HTML file served by GitHub Pages, pointed at by mywebsitehosting.virtualsociety. No build step, no framework, no trackers.</p>
+  <div class="card">
+    <p>mywebsitehosting.virtualsociety &nbsp;&rarr;&nbsp; GitHub Pages</p>
+  </div>
+</div>
+<footer>static HTML &middot; GitHub Pages &middot; own domain</footer>
+</body>
+</html>
