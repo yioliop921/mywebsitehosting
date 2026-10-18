@@ -186,6 +186,37 @@ footer p{margin:0}
     </tbody>
   </table>
 
+  <h3>Three files, three consumers</h3>
+  <p>
+    Before you touch anything, it helps to know <em>who</em> reads each piece. Different
+    software looks at a different one, and that is why a setup can look complete and still
+    serve nothing.
+  </p>
+
+  <table>
+    <thead><tr><th>part</th><th>who reads it</th><th>what it holds</th></tr></thead>
+    <tbody>
+      <tr><td>DNS zone record</td><td>ordinary DNS lookups, and the Noto nameserver</td><td>one IP address</td></tr>
+      <tr><td>On-chain record</td><td>web3 browsers and resolvers</td><td>the same IP, plus the redirect</td></tr>
+      <tr><td><code>CNAME</code> file</td><td>GitHub</td><td>your domain, so GitHub answers for it</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn">
+    <strong>Two record layers, and they are not the same thing</strong>
+    <p>
+      A web3 domain keeps records in <strong>two places</strong>: a normal DNS zone, and the
+      blockchain. Freename keeps them in step, and when the zone row is tied to an on-chain
+      slot, the resolver reads the <em>chain</em> value rather than the one you typed.
+    </p>
+    <p>
+      This is the single most common reason a site &ldquo;works for me but not for
+      anyone&rdquo;. You add a record in the DNS table, it displays perfectly &mdash; and if
+      that row is chained, the value being served is the one on-chain instead. You need both
+      layers set, and they must agree.
+    </p>
+  </div>
+
   <h3>What you need</h3>
   <ul class="plain">
     <li>A GitHub account (free)</li>
@@ -434,6 +465,14 @@ git push</code></pre>
       brings the plain <code>github.io</code> address back, but it costs you the domain
       inside web3 browsers &mdash; so treat that as a temporary measure only.
     </p>
+    <p>
+      And the other direction matters just as much: <strong>without this file GitHub answers
+      404 to your own domain</strong>, even when every DNS record is perfect. GitHub has no way
+      to know that <code>yourdomain.virtualsociety</code> is asking for
+      <code>username.github.io/&lt;repo&gt;/</code>. If your domain 404s while your records all
+      look right, check that <code>CNAME</code> exists, is named exactly that, and sits at the
+      top level of the repo.
+    </p>
   </div>
 
   <h3>4b &mdash; the DNS records</h3>
@@ -536,6 +575,20 @@ git push</code></pre>
       <tr><td>REDIRECT.WEBSITE.0</td><td>https://username.github.io/&lt;repo&gt;/</td><td>recommended</td></tr>
     </tbody>
   </table>
+
+  <div class="warn">
+    <strong>Point the redirect at your Pages URL, not your own domain</strong>
+    <p>
+      The value is <code>https://username.github.io/&lt;repo&gt;/</code> &mdash; the
+      <code>.github.io</code> address, ending with a slash. That is deliberate: of the two
+      addresses your site has, it is the only one that resolves publicly. Your web3 domain
+      lives on an alt-root and returns <code>NXDOMAIN</code> to anything on the ordinary web,
+      so a redirect pointing back at itself has nowhere to land.
+    </p>
+    <p>
+      Copy the address exactly as GitHub shows it, trailing slash included.
+    </p>
+  </div>
 
   <div class="ok">
     <strong>Capitalisation does not matter here</strong>
@@ -651,9 +704,35 @@ git push</code></pre>
   </ol>
 
   <h3>The command line</h3>
+  <p>
+    Two commands, because they answer two different questions. The first asks
+    <em>&ldquo;where does my domain point?&rdquo;</em> The second asks <em>&ldquo;is anything
+    actually being served there?&rdquo;</em> Running both tells you which half is broken.
+  </p>
+
   <pre><code>nslookup yourdomain.virtualsociety ns1.noto.network</code></pre>
 
   <p>You want to see <code>185.199.108.153</code>.</p>
+
+  <pre><code>curl -H "Host: yourdomain.virtualsociety" http://185.199.108.153/</code></pre>
+
+  <p>You want to see your own HTML.</p>
+
+  <div class="ok">
+    <strong>Why the second one earns its place</strong>
+    <p>
+      A correct DNS answer only proves the name resolves. It says nothing about whether a
+      server is answering behind it. This second command skips DNS entirely and asks GitHub
+      directly, pretending to be your domain &mdash; so if the first command looks perfect
+      and the site is still broken, this one tells you the fault is at the serving end, not
+      the DNS end.
+    </p>
+    <p>
+      It works on macOS and Linux too, which the <code>nslookup</code> form already does. If
+      <code>curl</code> isn&rsquo;t to hand, open the web2 mirror link from the first check
+      instead &mdash; it proves the same thing without a terminal.
+    </p>
+  </div>
 
   <div class="warn">
     <strong>Do not test a web3 domain with a plain lookup</strong>
@@ -680,10 +759,15 @@ git push</code></pre>
   <div class="ok">
     <strong>About waiting</strong>
     <p>
-      Changes can take minutes or hours depending on your provider and the previous
-      record&rsquo;s TTL. If the lookup shows the right IP but the page still errors, give
-      it time and reload. If it shows the <em>wrong</em> IP, waiting will never help
-      &mdash; the records aren&rsquo;t signed or aren&rsquo;t set.
+      A change that has actually been written usually shows up within a few minutes &mdash;
+      on this setup two to three was typical. Treat anything under that as propagation and
+      simply wait.
+    </p>
+    <p>
+      Past a few minutes, waiting stops being the explanation. If the answer is still the
+      <em>old</em> value, the change was never picked up: the record was not signed, or it was
+      written identically to what was already there. Both are fixed by acting, not waiting
+      &mdash; and the second one is the stall described in <strong>When it goes wrong</strong>.
     </p>
   </div>
 </section>
@@ -694,6 +778,71 @@ git push</code></pre>
     <span class="step-n">!!</span>
     <h2 class="step-t">When it goes wrong</h2>
     <span class="step-m">Keep this</span>
+  </div>
+
+  <div class="trouble">
+    <h3>My domain is stuck on <code>34.22.218.54</code></h3>
+    <p>
+      That is Freename&rsquo;s parking address. Seeing it means the resolver found no usable
+      record for your name &mdash; not that your site is down, but that nothing is pointing at
+      it yet. <strong>It will not fix itself.</strong>
+    </p>
+    <p>Work down this list, in order:</p>
+    <ol class="plain">
+      <li><strong>Delete the <code>A</code> row and add it again.</strong> Always first. This clears a stale internal pointer, which is the usual cause and is completely invisible in the dashboard.</li>
+      <li>Check every key letter by letter for a typo or a leftover name from an earlier attempt.</li>
+      <li>Confirm you pressed <strong>Sign Transaction</strong>. Unsaved records display perfectly and do nothing.</li>
+      <li>Then wait. A minute or two is propagation. Much longer than that is a fault, not a delay.</li>
+    </ol>
+    <p>
+      If it is still parked after all four, the record is <strong>stalled</strong> &mdash; see
+      the next entry, which is the fix that actually works.
+    </p>
+  </div>
+
+  <div class="trouble">
+    <h3>My record is correct but nothing has changed</h3>
+    <p>
+      This is the stall, and it is the most confusing failure in the whole process, because
+      every value on screen is right. You look at the <code>A</code> row, it says
+      <code>185.199.108.153</code>, the status says <em>resolves</em> &mdash; and the site
+      still serves whatever it served before.
+    </p>
+    <p>
+      <strong>Why it happens:</strong> writing the <em>same</em> value again is invisible. The
+      resolver sees nothing that changed, so it keeps serving the answer it already has. Save
+      the record ten more times and it will stay stuck exactly as long as you keep saving the
+      same thing.
+    </p>
+    <p><strong>The fix &mdash; change the value, wait, then change it back:</strong></p>
+    <ol class="plain">
+      <li>Delete the <code>A</code> row.</li>
+      <li>Add it again with a <strong>different</strong> IP &mdash; use another GitHub Pages address, <code>185.199.109.153</code>. Nothing is lost if this one lands: it is still a GitHub address, so the site keeps working.</li>
+      <li>Press <strong>Sign Transaction</strong>, then wait about two to three minutes.</li>
+      <li>Confirm the new value is live.</li>
+      <li>Now change it back to <code>185.199.108.153</code>, sign again, and wait once more.</li>
+    </ol>
+    <p>
+      This is the single most useful thing in this guide. We lost days to a domain that sat
+      on the parking address, re-saving an identical record, waiting for a change that was
+      never going to come. <strong>A stalled record is not fixed by saving it again. It is
+      fixed by making it visibly different first.</strong>
+    </p>
+  </div>
+
+  <div class="trouble">
+    <h3>It works everywhere except Obian</h3>
+    <p>
+      Obian resolves your domain to an IP and then requests that IP <em>on its own</em>,
+      without telling GitHub which site it wants. GitHub serves thousands of sites and needs
+      the hostname to pick one, so it answers <strong>404</strong> to a bare IP request. Your
+      setup is perfect &mdash; this is a property of how Obian connects.
+    </p>
+    <p>
+      <strong>No DNS or record setting changes this.</strong> If your site must open in Obian,
+      host it somewhere whose IP answers without a hostname, such as Vercel. Every other
+      browser, including the web2 mirror link, is unaffected.
+    </p>
   </div>
 
   <div class="trouble">
