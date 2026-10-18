@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>mywebsitehosting.virtualsociety — host your own site, step by step</title>
+<title>yourdomain.virtualsociety — host your own site, step by step</title>
 <meta name="description" content="The complete, tested process for putting a plain HTML site on GitHub Pages and pointing a web3 domain at it. Every click screenshotted, every trap documented.">
 <meta name="theme-color" content="#ffffff">
 <style>
@@ -132,7 +132,7 @@ footer p{margin:0}
 
 <header>
   <div class="wrap nav">
-    <a class="brand" href="#top"><span class="mark"></span><span>mywebsitehosting</span></a>
+    <a class="brand" href="#top"><span class="mark"></span><span>hostingguide</span></a>
     <nav class="links">
       <a href="#start">Start</a>
       <a href="#files">Files</a>
@@ -287,22 +287,14 @@ footer p{margin:0}
     <li>Click <strong>Create repository</strong></li>
   </ol>
 
-  <figure>
-    <div class="shot">
-      <img src="shots/01-github-pages.png" alt="GitHub Settings Pages screen for yioliop921/mywebsitehosting, showing Build and deployment with Source set to Deploy from a branch, branch main, folder root, and a green box confirming the site is live at the custom domain." width="1062" height="678">
-      <span class="pin" style="left:42%;top:36%">1</span>
-      <span class="pin" style="left:46%;top:56%">2</span>
-      <span class="pin" style="left:27%;top:73%">3</span>
-      <span class="pin" style="left:27%;top:81%">4</span>
-    </div>
-    <figcaption>Settings &rarr; Pages &mdash; the green box proves the domain is serving</figcaption>
-  </figure>
-  <ol class="legend">
-    <li><span class="n">1</span><span><strong>&ldquo;Your site is live at&rdquo;</strong>. On a finished setup this shows <strong>your own domain</strong>, not the <code>github.io</code> one. Seeing your domain here is the single clearest sign the whole chain worked.</span></li>
-    <li><span class="n">2</span><span><strong>Source</strong>: <code>Deploy from a branch</code>.</span></li>
-    <li><span class="n">3</span><span><strong>Branch</strong> <code>main</code>, folder <code>/ (root)</code>.</span></li>
-    <li><span class="n">4</span><span><strong>Save</strong> &mdash; greyed out because the settings already match.</span></li>
-  </ol>
+  <div class="ok">
+    <strong>A note on what gets published</strong>
+    <p>
+      Pages publishes the repository&rsquo;s contents &mdash; not a build output folder you
+      choose. Anything you commit is published at your domain. If the repo also holds
+      anything you&rsquo;d rather not serve, keep it in a different repository.
+    </p>
+  </div>
 
   <h3>Upload</h3>
   <p>
@@ -314,7 +306,7 @@ footer p{margin:0}
     <strong>The name has to be exactly right</strong>
     <p>
       <code>myfile.html</code> gets you a 404. GitHub only serves the root automatically for
-      the exact lowercase name <code>index.html</code>.
+      the exact lower-case name <code>index.html</code>.
     </p>
   </div>
 
@@ -348,19 +340,17 @@ git push -u origin main</code></pre>
 
   <figure>
     <div class="shot">
-      <img src="shots/02-github-custom-domain.png" alt="GitHub Pages Custom domain field filled with mywebsitehosting.virtualsociety, a red DNS check unsuccessful warning, an improperly configured notice, and Enforce HTTPS marked unavailable." width="1062" height="678">
-      <span class="pin" style="left:40%;top:27%">1</span>
-      <span class="pin" style="left:35%;top:31%">2</span>
-      <span class="pin" style="left:60%;top:41%">3</span>
-      <span class="pin" style="left:35%;top:57%">4</span>
+      <img src="shots/03-github-pages.png" alt="GitHub Pages settings showing Source set to Deploy from a branch, branch main and folder root, the Custom domain field filled in with a red DNS check unsuccessful warning and an improperly configured InvalidDomainError notice, Enforce HTTPS greyed out, and a green box confirming the site is live at the custom domain." width="1062" height="678">
     </div>
-    <figcaption>Custom domain filled in &mdash; and the warnings you can safely ignore</figcaption>
+    <figcaption>Everything on this page, in order &mdash; and the warnings you can safely ignore</figcaption>
   </figure>
   <ol class="legend">
-    <li><span class="n">1</span><span>The <strong>Custom domain</strong> field, holding <code>mywebsitehosting.virtualsociety</code>. It fills itself in from the <code>CNAME</code> file in your repo &mdash; commit that file and this appears.</span></li>
-    <li><span class="n">2</span><span><strong>DNS check unsuccessful</strong> &mdash; <strong>expected, ignore it.</strong> GitHub validates by asking public DNS resolvers, and a web3 domain doesn&rsquo;t exist in the ordinary DNS tree, so the check always fails.</span></li>
-    <li><span class="n">3</span><span><strong>&ldquo;is improperly configured&rdquo;</strong> / <code>InvalidDomainError</code> &mdash; same root cause, same answer. GitHub can&rsquo;t see the domain; it still serves it.</span></li>
-    <li><span class="n">4</span><span><strong>Enforce HTTPS</strong> &mdash; unavailable. Web3 domains are HTTP-only, so no certificate can be issued. Never tick it.</span></li>
+    <li><span class="n">1</span><span>Open <code>github.com/yourusername/yourrepo/settings/pages</code>.</span></li>
+    <li><span class="n">2</span><span>Set <strong>Source</strong> to <strong>Deploy from a branch</strong>.</span></li>
+    <li><span class="n">3</span><span>Branch <code>main</code>, folder <code>/ (root)</code>, then <strong>Save</strong>.</span></li>
+    <li><span class="n">4</span><span>Paste your domain into <strong>Custom domain</strong> and <strong>Save</strong>. Then <strong>ignore</strong> the red <strong>&ldquo;DNS check unsuccessful&rdquo;</strong> warning underneath it.</span></li>
+    <li><span class="n">5</span><span><strong>Enforce HTTPS</strong> &mdash; leave it <strong>unchecked</strong>. Web3 domains are HTTP-only on Noto DNS, so no certificate can ever be issued for one. GitHub greys this out for exactly that reason.</span></li>
+    <li><span class="n">6</span><span>Your domain appears in the green box: <strong>&ldquo;Your site is live at&rdquo;</strong>. <strong>This is the only thing that proves it worked.</strong> Before you add a custom domain, this box shows your <code>github.io</code> address instead.</span></li>
   </ol>
 
   <div class="ok">
@@ -397,44 +387,70 @@ git push -u origin main</code></pre>
 
   <p>Two pieces of setup, and the order matters.</p>
 
-  <h3>4a &mdash; the CNAME file</h3>
-  <p>Create a file named exactly <code>CNAME</code> containing one line and nothing else:</p>
-  <pre><code>mywebsitehosting.virtualsociety</code></pre>
+  <h3>4a &mdash; add the CNAME file</h3>
+  <p>
+    This one small file is what connects your domain to your repo. Create a file named
+    exactly <code>CNAME</code> containing one line &mdash; your domain, and nothing else.
+    No quotes, no slash, no trailing dot.
+  </p>
+  <pre><code>yourdomain.virtualsociety</code></pre>
+
+  <h4>Adding it through the browser</h4>
+  <ol class="plain">
+    <li>Open your repo on GitHub, click <strong>Add file</strong> &rarr; <strong>Create new file</strong></li>
+    <li>In the name box type <code>CNAME</code> &mdash; exactly that, all capitals, no extension</li>
+    <li>Paste your domain into the content box below</li>
+    <li>Scroll down and <strong>Commit changes</strong></li>
+    <li>Wait a minute, reload <strong>Settings &rarr; Pages</strong> &mdash; the <strong>Custom domain</strong> box fills itself in</li>
+  </ol>
+
+  <h4>Adding it from the command line</h4>
+  <pre><code>echo "yourdomain.virtualsociety" &gt; CNAME
+git add CNAME
+git commit -m "Add custom domain"
+git push</code></pre>
 
   <div class="warn">
-    <strong>This one file controls your Pages URL</strong>
+    <strong>Getting the filename wrong</strong>
+    <p>
+      It must be <code>CNAME</code> &mdash; not <code>cname</code>, not
+      <code>CNAME.txt</code>, not <code>mycname</code>. GitHub is case-sensitive here and
+      gives no warning at all. If your domain never appears in the Custom domain box, this
+      is the first thing to check.
+    </p>
+  </div>
+
+  <div class="warn">
+    <strong>What this file does to your Pages URL</strong>
     <p>
       The moment <code>CNAME</code> exists, GitHub redirects
       <code>username.github.io/&lt;repo&gt;/</code> to your domain with a real
-      <strong>HTTP 301</strong>, on the server &mdash; not with JavaScript. If your domain
-      isn&rsquo;t working yet, every visitor to your Pages URL gets sent to a broken page
-      and the Pages URL becomes unusable.
+      <strong>HTTP 301</strong>, on the server &mdash; not with JavaScript. Over the
+      ordinary web that looks like a broken link, because your browser can&rsquo;t follow a
+      name that lives on an alt-root. Inside a web3 resolver it works perfectly.
     </p>
     <p>
-      That&rsquo;s fine &mdash; just don&rsquo;t be surprised. If you need to undo it, rename
-      the file to <code>CNAME.disabled</code>, commit, and GitHub goes straight back to
-      serving the Pages URL. Rename it back when the domain is live.
+      So <strong>keep the file active.</strong> Renaming it to <code>CNAME.disabled</code>
+      brings the plain <code>github.io</code> address back, but it costs you the domain
+      inside web3 browsers &mdash; so treat that as a temporary measure only.
     </p>
   </div>
 
   <h3>4b &mdash; the DNS records</h3>
-  <p>Add these at your domain provider:</p>
+  <p>Add these on your domain&rsquo;s Records tab. Only the first is required:</p>
 
   <table>
-    <thead><tr><th>type</th><th>name</th><th>value</th><th>TTL</th></tr></thead>
+    <thead><tr><th>type</th><th>name</th><th>value</th><th>TTL</th><th></th></tr></thead>
     <tbody>
-      <tr><td>A</td><td>@</td><td>185.199.108.153</td><td>300</td></tr>
-      <tr><td>A</td><td>@</td><td>185.199.109.153</td><td>300</td></tr>
-      <tr><td>A</td><td>@</td><td>185.199.110.153</td><td>300</td></tr>
-      <tr><td>A</td><td>@</td><td>185.199.111.153</td><td>300</td></tr>
-      <tr><td>CNAME</td><td>www</td><td>username.github.io</td><td>300</td></tr>
+      <tr><td>A</td><td>@</td><td>185.199.108.153</td><td>300</td><td>required</td></tr>
+      <tr><td>CNAME</td><td>www</td><td>username.github.io</td><td>300</td><td>optional</td></tr>
     </tbody>
   </table>
 
   <p>
-    GitHub uses four anycast addresses. Add all four &mdash; they cost nothing, and they
-    keep the site reachable if any single address is ever withdrawn. Note each one is its
-    own row; you can&rsquo;t put four addresses in one record.
+    GitHub Pages publishes on four anycast addresses, so you will see guides telling you to
+    add all four. We tested it: <strong>one is enough.</strong> Add the extra three and your
+    site still serves identically. We carry a single A record, and it has been stable.
   </p>
 
   <div class="warn">
@@ -442,7 +458,7 @@ git push -u origin main</code></pre>
     <p>
       The <code>www</code> CNAME must be <strong>your</strong> username&rsquo;s Pages host
       &mdash; <code>username.github.io</code>, never
-      <code>username.github.io/myrepo</code>. The A records are the opposite: they&rsquo;re
+      <code>username.github.io/myrepo</code>. The A record is the opposite: it&rsquo;s
       GitHub&rsquo;s, the same for every Pages site on the internet, and unrelated to your
       account.
     </p>
@@ -450,23 +466,18 @@ git push -u origin main</code></pre>
 
   <figure>
     <div class="shot">
-      <img src="shots/03-freename-full.png" alt="The complete Freename Records page for mywebsitehosting.virtualsociety, showing the domain header, status line, Wallet Address, Forward Domain toggle, the DNS Records table with A, NS and CNAME rows, and the Web3 Records table with five record slots." width="1330" height="1920">
-      <span class="pin" style="left:32%;top:29%">1</span>
-      <span class="pin" style="left:20%;top:36%">2</span>
-      <span class="pin" style="left:20%;top:46%">3</span>
-      <span class="pin" style="left:10%;top:56%">4</span>
-      <span class="pin" style="left:33%;top:66%">5</span>
-      <span class="pin" style="left:33%;top:87%">6</span>
+      <img src="shots/04-freename-records.png" alt="The Freename Records tab for the domain, showing a resolving status line, the Wallet Address box with Sign Transaction, the Forward Domain toggle left off, a DNS Records table with A, two NS and a www CNAME row, and a Web3 Records table with RECORD.A.0 and REDIRECT.WEBSITE.0." width="1330" height="1221">
     </div>
-    <figcaption>The entire Freename Records page &mdash; everything in steps 04 and 05 happens on this one screen</figcaption>
+    <figcaption>The Freename Records tab &mdash; steps 04 and 05 both happen on this one screen</figcaption>
   </figure>
   <ol class="legend">
-    <li><span class="n">1</span><span>Status line. <strong>&ldquo;not resolving&rdquo;</strong> here is normal before you sign &mdash; it flips once the chain catches up.</span></li>
-    <li><span class="n">2</span><span><strong>Wallet Address</strong> &mdash; the wallet registered to this domain. This is the account that signs your records.</span></li>
-    <li><span class="n">3</span><span><strong>Sign Transaction</strong> appears here once a wallet is connected. <strong>This is the step everything depends on.</strong> Everything below is only configuration until you press it.</span></li>
-    <li><span class="n">4</span><span><strong>Forward Domain</strong> &mdash; the trap. Its own caption says it &ldquo;will disable your root A record&rdquo;. Leave it <strong>off</strong>.</span></li>
-    <li><span class="n">5</span><span><strong>DNS Records</strong> &mdash; the <code>A</code>, <code>NS</code> and <code>www</code> CNAME rows. The convenience view.</span></li>
-    <li><span class="n">6</span><span><strong>Web3 Records</strong> &mdash; the five <code>RECORD.A.*</code> / <code>REDIRECT.WEBSITE.0</code> rows. This is what the nameserver actually reads.</span></li>
+    <li><span class="n">1</span><span>Open your domain, then the <strong>Records</strong> tab. The status line under the domain name should read <strong>&ldquo;resolves&rdquo;</strong> &mdash; if it doesn&rsquo;t yet, you&rsquo;re looking at a name with nothing published, which is normal before step 05.</span></li>
+    <li><span class="n">2</span><span><strong>Wallet Address</strong> plus the yellow <strong>Sign Transaction</strong> button. This button is what actually commits your records to the chain. Everything below is only configuration until you press it.</span></li>
+    <li><span class="n">3</span><span><strong>Forward Domain</strong> &mdash; the trap. Its own caption on screen says it <em>&ldquo;will disable your root A record pointing to 185.199.108.153&rdquo;</em>. Leave it <strong>off</strong>.</span></li>
+    <li><span class="n">4</span><span>In <strong>DNS Records</strong>, add a single <code>A</code> row on <code>@</code> with value <code>185.199.108.153</code>, TTL <code>300</code>. The two <code>NS</code> rows are added for you &mdash; leave them.</span></li>
+    <li><span class="n">5</span><span>Optional: a <code>CNAME</code> row on <code>www</code> pointing at <code>yourusername.github.io</code>. Your bare domain works without it; this just makes <code>www</code> behave the same way.</span></li>
+    <li><span class="n">6</span><span>In <strong>Web3 Records</strong>, add <code>RECORD.A.0</code> with the same IP, <code>185.199.108.153</code>. This on-chain slot is what the nameserver reads.</span></li>
+    <li><span class="n">7</span><span>Also in <strong>Web3 Records</strong>, add <code>REDIRECT.WEBSITE.0</code> with your Pages URL &mdash; <code>https://yourusername.github.io/yourrepo/</code>. Note it points at the <code>github.io</code> address, <em>not</em> at your web3 domain.</span></li>
   </ol>
 
   <div class="warn">
@@ -510,27 +521,36 @@ git push -u origin main</code></pre>
     nothing to serve.
   </p>
 
-  <h3>One slot per address</h3>
-  <p>Each IP needs its own on-chain slot. Four addresses means four records, not one record with four values:</p>
+  <h3>Two records, not six</h3>
+  <p>
+    GitHub Pages publishes on four IP addresses, and most guides tell you to fill four on-chain
+    slots. We tested it. <strong>One is enough.</strong> Add the second slot and delete
+    slots <code>.1</code>, <code>.2</code> and <code>.3</code> &mdash; the site keeps serving
+    perfectly. Fewer records, fewer things to go wrong.
+  </p>
 
   <table>
-    <thead><tr><th>slot</th><th>value</th></tr></thead>
+    <thead><tr><th>slot</th><th>value</th><th></th></tr></thead>
     <tbody>
-      <tr><td>RECORD.A.0</td><td>185.199.108.153</td></tr>
-      <tr><td>RECORD.A.1</td><td>185.199.109.153</td></tr>
-      <tr><td>RECORD.A.2</td><td>185.199.110.153</td></tr>
-      <tr><td>RECORD.A.3</td><td>185.199.111.153</td></tr>
-      <tr><td>REDIRECT.WEBSITE.0</td><td>https://username.github.io/&lt;repo&gt;/</td></tr>
+      <tr><td>RECORD.A.0</td><td>185.199.108.153</td><td>required</td></tr>
+      <tr><td>REDIRECT.WEBSITE.0</td><td>https://username.github.io/&lt;repo&gt;/</td><td>recommended</td></tr>
     </tbody>
   </table>
 
-  <div class="warn">
-    <strong>Capital letters matter</strong>
+  <div class="ok">
+    <strong>Capitalisation does not matter here</strong>
     <p>
-      The redirect key is <code>REDIRECT.WEBSITE.0</code>, written in capitals.
-      <code>redirect.website.0</code> in lowercase is a <strong>different record</strong> &mdash;
-      it will sit in your table looking perfectly reasonable while doing nothing at all. This
-      one cost us hours. If a record isn&rsquo;t behaving, check its capitalisation first.
+      We expected this to be a trap, so we tested it. It isn&rsquo;t. Freename matches these
+      keys <strong>case-insensitively</strong>: typing <code>record.A.0</code> or
+      <code>RECORD.A.0</code> updates the same single row rather than creating a second one,
+      and the same holds for <code>REDIRECT.WEBSITE.0</code>.
+    </p>
+    <p>
+      A record may be displayed in either case depending on how it was first saved, so you may
+      see <code>RECORD.A.0</code> in the dashboard and <code>record.A.0</code> in an export.
+      Both are the same slot. What <em>does</em> create a stray second record is a different
+      key name entirely &mdash; <code>RECORD_IP.0</code>, <code>A.0</code> &mdash; so check
+      the spelling rather than the case.
     </p>
   </div>
 
@@ -541,34 +561,16 @@ git push -u origin main</code></pre>
     records to the chain. Until you press it, you have configuration, not a live domain.
   </p>
 
-  <figure>
-    <div class="shot">
-      <img src="shots/03-freename-full.png" alt="Zoomed detail of the Freename Web3 Records table showing RECORD.A.0 through RECORD.A.3 with the four GitHub IPs and REDIRECT.WEBSITE.0 with the Pages URL." width="1330" height="620">
-      <span class="pin" style="left:14%;top:18%">1</span>
-      <span class="pin" style="left:14%;top:35%">2</span>
-      <span class="pin" style="left:14%;top:52%">3</span>
-      <span class="pin" style="left:14%;top:69%">4</span>
-      <span class="pin" style="left:14%;top:86%">5</span>
-    </div>
-    <figcaption>The five Web3 rows you want to see, at full width</figcaption>
-  </figure>
-  <ol class="legend">
-    <li><span class="n">1</span><span><code>RECORD.A.0</code> &rarr; <code>185.199.108.153</code>. One slot, one address.</span></li>
-    <li><span class="n">2</span><span><code>RECORD.A.1</code> &rarr; <code>185.199.109.153</code></span></li>
-    <li><span class="n">3</span><span><code>RECORD.A.2</code> &rarr; <code>185.199.110.153</code></span></li>
-    <li><span class="n">4</span><span><code>RECORD.A.3</code> &rarr; <code>185.199.111.153</code></span></li>
-    <li><span class="n">5</span><span><code>REDIRECT.WEBSITE.0</code> &rarr; your Pages URL. <strong>Capital letters.</strong></span></li>
-  </ol>
-
   <div class="ok">
     <strong>What &ldquo;correct&rdquo; looks like</strong>
     <p>
       In <strong>DNS Records</strong> you should see an <code>A</code> row on
-      <code>185.199.108.153</code> plus the two <code>NS</code> rows and your
-      <code>www</code> CNAME. In <strong>Web3 Records</strong> you should see exactly five
-      rows: <code>RECORD.A.0</code> through <code>RECORD.A.3</code> holding the four GitHub
-      IPs, and <code>REDIRECT.WEBSITE.0</code> holding your Pages URL. Then press
-      <strong>Sign Transaction</strong>.
+      <code>185.199.108.153</code>, the two <code>NS</code> rows, and your optional
+      <code>www</code> CNAME. In <strong>Web3 Records</strong> you should see exactly
+      <strong>two</strong> rows: <code>RECORD.A.0</code> with the IP, and
+      <code>REDIRECT.WEBSITE.0</code> with your Pages URL. That is the whole configuration.
+      Then press <strong>Sign Transaction</strong> &mdash; and only then does any of it reach
+      the chain.
     </p>
   </div>
 
@@ -591,8 +593,65 @@ git push -u origin main</code></pre>
     <span class="step-m">2 min</span>
   </div>
 
-  <h3>Check it resolves</h3>
-  <pre><code>nslookup yourdomain.com ns1.noto.network</code></pre>
+  <p>
+    Good news first: you have <strong>two</strong> ways to open the finished site, and only one
+    of them needs any web3 tooling at all.
+  </p>
+
+  <h3>The easy check &mdash; your web2 link</h3>
+  <p>
+    Every <code>.virtualsociety</code> name is automatically mirrored onto the ordinary web at
+    <strong>yourname.virtualsociety.top</strong>. You don&rsquo;t configure this, don&rsquo;t
+    pay for it, and don&rsquo;t set anything up for it &mdash; it exists as soon as your
+    domain resolves. It opens in any browser, no plugin, no API key, and over HTTPS.
+  </p>
+
+  <figure>
+    <div class="shot">
+      <img src="shots/01-web2-mirror.png" alt="Three browser windows: the getweb2link tool with the web3 name entered and the mirrored web2 link returned, a preview of the site embedded in the tool, the site opened directly at its virtualsociety.top address, and the site opened at its web3 virtualsociety address." width="1200" height="720">
+    </div>
+    <figcaption>Finding your web2 link, and the same site open on both addresses</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><span class="n">1</span><span>Go to <code>virtualsociety.top/getweb2link</code>.</span></li>
+    <li><span class="n">2</span><span>Type the web3 name you registered on <code>.virtualsociety</code> and press <strong>Resolve</strong>.</span></li>
+    <li><span class="n">3</span><span>You get back your mirrored web2 link &mdash; <code>https://yourname.virtualsociety.top/</code>.</span></li>
+    <li><span class="n">4</span><span>Your site is previewed right there in the page. If it renders, everything upstream already works.</span></li>
+    <li><span class="n">5</span><span>Click the link to open your site on the web2 address &mdash; this is the same action as step 3, it just also opens it.</span></li>
+    <li><span class="n">6</span><span>Top right: your web2 link open on its own, in a normal browser, over HTTPS.</span></li>
+    <li><span class="n">7</span><span>Bottom right: <strong>the same site on the web3 address</strong>, <code>yourname.virtualsociety</code>. Identical page. This one needs Noto DNS or a web3 browser &mdash; the web2 one above doesn&rsquo;t.</span></li>
+  </ol>
+
+  <div class="ok">
+    <strong>This is the check worth doing first</strong>
+    <p>
+      If the preview in step 4 renders your site, GitHub Pages is serving correctly and your
+      DNS is resolving &mdash; which means any failure from here on is something else entirely.
+      It also answers the question most people actually have: <em>can a normal person, on a
+      normal browser, open my site?</em> Yes.
+    </p>
+  </div>
+
+  <h3>The authoritative check &mdash; what your domain publishes</h3>
+  <p>
+    To confirm the records themselves, use the DNS tool. This reads straight from Freename&rsquo;s
+    own nameservers, so it shows you the truth rather than a cache.
+  </p>
+
+  <figure>
+    <div class="shot">
+      <img src="shots/02-noto-resolving.png" alt="The virtualsociety.top DNS records tool with the web3 domain entered, showing its published A record pointing to the GitHub Pages IP, AAAA, CNAME, MX and TXT marked as not published, and the two Noto nameservers." width="1200" height="720">
+    </div>
+    <figcaption>Reading the records your domain actually publishes</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><span class="n">1</span><span>Go to <code>virtualsociety.top/tool/dnscheck</code>.</span></li>
+    <li><span class="n">2</span><span>Type your web3 name and press <strong>Look up</strong>.</span></li>
+    <li><span class="n">3</span><span>You get your published records. The <code>A</code> row should read <code>185.199.108.153</code>, with <code>NS 1</code> and <code>NS 2</code> showing the Noto nameservers. <code>AAAA</code>, <code>CNAME</code>, <code>MX</code> and <code>TXT</code> showing <em>none published</em> is perfectly normal.</span></li>
+  </ol>
+
+  <h3>The command line</h3>
+  <pre><code>nslookup yourdomain.virtualsociety ns1.noto.network</code></pre>
 
   <p>You want to see <code>185.199.108.153</code>.</p>
 
@@ -658,11 +717,14 @@ git push -u origin main</code></pre>
   </div>
 
   <div class="trouble">
-    <h3>I spelled the redirect key in lowercase</h3>
+    <h3>My record saved but nothing changed</h3>
     <p>
-      It saved, and it looks fine, and it does nothing. <code>REDIRECT.WEBSITE.0</code> is
-      capitalised; the lowercase spelling is a different record. Delete it and create it
-      again in capitals.
+      Almost always the wrong <em>name</em>, not the wrong case. Casing is matched
+      case-insensitively, so <code>record.A.0</code> and <code>RECORD.A.0</code> are the same
+      slot &mdash; but <code>RECORD_IP.0</code>, <code>A.0</code> or
+      <code>REDIRECT.WEBSITE</code> (missing the <code>.0</code>) are three different keys that
+      will each save happily and each do nothing. Read the key character by character against
+      the table above.
     </p>
   </div>
 
@@ -716,7 +778,7 @@ git push -u origin main</code></pre>
 
 <footer>
   <div class="wrap">
-    <p>mywebsitehosting.virtualsociety</p>
+    <p>yourdomain.virtualsociety</p>
     <p>Static HTML &middot; GitHub Pages &middot; no trackers &middot; no build step</p>
   </div>
 </footer>
