@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#ffffff">
 <style>
 :root{
-  --ink:#14161c; --ink-2:#3d4250; --muted:#6b7180; --line:#dfe3ea; --line-2:#eef1f5;
+  --ink:#14161c; --ink-2:#3d4250; --muted:#5f6472; --line:#dfe3ea; --line-2:#eef1f5;
   --bg:#ffffff; --soft:#f7f9fc; --accent:#1f4fd8; --accent-soft:#e8eeff;
   --warn:#b3380f; --warn-bg:#fdeee7; --ok:#0b6b4f; --ok-bg:#e2f4ec;
   --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
@@ -114,11 +114,70 @@ footer{border-top:1px solid var(--line);margin-top:3rem;background:var(--soft)}
 footer .wrap{padding-block:1.5rem 2.2rem;display:flex;justify-content:space-between;gap:.8rem;flex-wrap:wrap;font-family:var(--mono);font-size:.75rem;color:var(--muted)}
 footer p{margin:0}
 
+/* ---------- responsive ---------- */
+/* Nothing may exceed the viewport width. Long URLs and code strings are the
+   usual culprits, so they are allowed to break rather than push the page. */
+img,svg,video{max-width:100%;height:auto}
+code{overflow-wrap:anywhere;word-break:break-word}
+/* inside a dark table header, code must flip back to dark-on-light */
+th code,td code{background:#fff;color:var(--ink);border-color:transparent}
+pre{max-width:100%;-webkit-overflow-scrolling:touch}
+/* wide tables scroll inside their own box instead of stretching the page */
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 0 1.5rem;
+    border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.tw table{margin:0;min-width:34rem}
+.tw::-webkit-scrollbar{height:8px}
+.tw::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:4px}
+/* flex children must be allowed to shrink, or text forces the row wide */
+.legend li{min-width:0}
+.legend li>span:last-child{min-width:0;overflow-wrap:anywhere}
+.step-head>*{min-width:0}
+h1,h2,h3{overflow-wrap:break-word}
+
+@media(max-width:820px){
+  :root{--pad:18px}
+  h1{font-size:clamp(1.7rem,6.2vw,2.5rem)}
+  body{font-size:16.5px}
+  .tw table{min-width:30rem}
+}
+
 @media(max-width:620px){
   body{font-size:16px}
-  .step-head{flex-wrap:wrap}
-  th,td{font-size:.76rem;padding:.45rem}
-  footer .wrap{flex-direction:column}
+  .step-head{gap:.6rem}
+  .step-t{font-size:1.22rem}
+  .step-m{font-size:.64rem}
+  .hero{padding-block:30px 20px}
+  h1{font-size:1.65rem}
+  .lede{font-size:1rem}
+  th,td{font-size:.8rem;padding:.5rem .55rem}
+  .tw table{min-width:26rem}
+  pre{font-size:.8rem;padding:.85rem .9rem}
+  .legend{font-size:.95rem}
+  .legend li{gap:.5rem}
+  .shot{border-radius:8px}
+  footer .wrap{flex-direction:column;gap:.4rem}
+  .ok,.warn,.trouble,.box{padding:.85rem .95rem}
+}
+
+@media(max-width:420px){
+  :root{--pad:14px}
+  body{font-size:15.5px}
+  h1{font-size:1.5rem}
+  h2,.step-t{font-size:1.12rem}
+  h3{font-size:1.02rem}
+  .step-n{font-size:.72rem;padding:.2rem .42rem}
+  .legend li{font-size:.94rem}
+  .legend .n{width:19px;height:19px;font-size:.66rem}
+  th,td{font-size:.75rem;padding:.45rem .45rem}
+  .tw table{min-width:22rem}
+  .metaline{font-size:.7rem}
+}
+
+@media(max-width:340px){
+  :root{--pad:11px}
+  body{font-size:15px}
+  h1{font-size:1.36rem}
+  .tw table{min-width:19rem}
 }
 @media(prefers-reduced-motion:reduce){
   *{transition-duration:.01ms!important}
@@ -176,15 +235,15 @@ footer p{margin:0}
 
   <p>The finished setup has four moving parts. Each one is handled in a step below.</p>
 
-  <table>
-    <thead><tr><th>part</th><th>what it does</th><th>step</th></tr></thead>
+  <div class="tw"><table>
+    <thead><tr><th scope="col">part</th><th scope="col">what it does</th><th scope="col">step</th></tr></thead>
     <tbody>
-      <tr><td>Your files</td><td>HTML, CSS, favicon sitting in a folder</td><td><a href="#files">01</a></td></tr>
+      <tr><th scope="row">Your files</th><td>HTML, CSS, favicon sitting in a folder</td><td><a href="#files">01</a></td></tr>
       <tr><td>GitHub repo</td><td>Holds the files and their history</td><td><a href="#repo">02</a></td></tr>
       <tr><td>GitHub Pages</td><td>Serves those files at a free <code>.github.io</code> address</td><td><a href="#pages">03</a></td></tr>
       <tr><td>Your domain</td><td>Points at GitHub so the name is yours</td><td><a href="#dns">04&ndash;05</a></td></tr>
     </tbody>
-  </table>
+  </table></div>
 
   <h3>Three files, three consumers</h3>
   <p>
@@ -193,14 +252,14 @@ footer p{margin:0}
     serve nothing.
   </p>
 
-  <table>
-    <thead><tr><th>part</th><th>who reads it</th><th>what it holds</th></tr></thead>
+  <div class="tw"><table>
+    <thead><tr><th scope="col">part</th><th scope="col">who reads it</th><th scope="col">what it holds</th></tr></thead>
     <tbody>
-      <tr><td>DNS zone record</td><td>ordinary DNS lookups, and the Noto nameserver</td><td>one IP address</td></tr>
-      <tr><td>On-chain record</td><td>web3 browsers and resolvers</td><td>the same IP, plus the redirect</td></tr>
-      <tr><td><code>CNAME</code> file</td><td>GitHub</td><td>your domain, so GitHub answers for it</td></tr>
+      <tr><th scope="row">DNS zone record</th><td>ordinary DNS lookups, and the Noto nameserver</td><td>one IP address</td></tr>
+      <tr><th scope="row">On-chain record</th><td>web3 browsers and resolvers</td><td>the same IP, plus the redirect</td></tr>
+      <tr><th scope="row"><code>CNAME</code> file</th><td>GitHub</td><td>your domain, so GitHub answers for it</td></tr>
     </tbody>
-  </table>
+  </table></div>
 
   <div class="warn">
     <strong>Two record layers, and they are not the same thing</strong>
@@ -516,13 +575,13 @@ git push</code></pre>
   <h3>4b &mdash; the DNS records</h3>
   <p>Add these on your domain&rsquo;s Records tab. Only the first is required:</p>
 
-  <table>
-    <thead><tr><th>type</th><th>name</th><th>value</th><th>TTL</th><th></th></tr></thead>
+  <div class="tw"><table>
+    <thead><tr><th scope="col">type</th><th scope="col">name</th><th scope="col">value</th><th scope="col">TTL</th><th scope="col">needed?</th></tr></thead>
     <tbody>
-      <tr><td>A</td><td>@</td><td>185.199.108.153</td><td>300</td><td>required</td></tr>
-      <tr><td>CNAME</td><td>www</td><td>username.github.io</td><td>300</td><td>optional</td></tr>
+      <tr><th scope="row">A</th><td>@</td><td>185.199.108.153</td><td>300</td><td>required</td></tr>
+      <tr><th scope="row">CNAME</th><td>www</td><td>username.github.io</td><td>300</td><td>optional</td></tr>
     </tbody>
-  </table>
+  </table></div>
 
   <p>
     GitHub Pages publishes on four anycast addresses, so you will see guides telling you to
@@ -606,13 +665,13 @@ git push</code></pre>
     perfectly. Fewer records, fewer things to go wrong.
   </p>
 
-  <table>
-    <thead><tr><th>slot</th><th>value</th><th></th></tr></thead>
+  <div class="tw"><table>
+    <thead><tr><th scope="col">slot</th><th scope="col">value</th><th scope="col">needed?</th></tr></thead>
     <tbody>
-      <tr><td>RECORD.A.0</td><td>185.199.108.153</td><td>required</td></tr>
-      <tr><td>REDIRECT.WEBSITE.0</td><td>https://username.github.io/&lt;repo&gt;/</td><td>recommended</td></tr>
+      <tr><th scope="row">RECORD.A.0</th><td>185.199.108.153</td><td>required</td></tr>
+      <tr><th scope="row">REDIRECT.WEBSITE.0</th><td>https://username.github.io/&lt;repo&gt;/</td><td>recommended</td></tr>
     </tbody>
-  </table>
+  </table></div>
 
   <div class="warn">
     <strong>Point the redirect at your Pages URL, not your own domain</strong>
@@ -784,15 +843,15 @@ git push</code></pre>
   </div>
 
   <h3>Then read the result</h3>
-  <table>
-    <thead><tr><th>what you see</th><th>what it means</th></tr></thead>
+  <div class="tw"><table>
+    <thead><tr><th scope="col">what you see</th><th scope="col">what it means</th></tr></thead>
     <tbody>
       <tr><td>Your site</td><td>Done.</td></tr>
       <tr><td>404 from GitHub</td><td>DNS is fine; the repo isn&rsquo;t serving. Check the filename is exactly <code>index.html</code>.</td></tr>
       <tr><td>Old host or a 502</td><td>Your domain still points at whatever it pointed at before. The change hasn&rsquo;t propagated &mdash; or was never signed.</td></tr>
       <tr><td>Nothing at all</td><td>Nameservers are wrong, or the record was never committed to the chain.</td></tr>
     </tbody>
-  </table>
+  </table></div>
 
   <div class="ok">
     <strong>About waiting</strong>
