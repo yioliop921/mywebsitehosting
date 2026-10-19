@@ -260,7 +260,14 @@ footer p{margin:0}
 ├── index.html      the page itself (required)
 ├── favicon.svg     the little tab icon
 ├── .nojekyll       empty file - see below
+├── images/         optional, only if your site uses one
 └── CNAME           added in step 04, your domain only</code></pre>
+
+  <p>
+    Every one of these sits at the <strong>top level</strong> of the folder. That is not a
+    style preference &mdash; put <code>index.html</code> inside a subfolder and the site 404s,
+    and you&rsquo;ll see it happen in step 06.
+  </p>
 
   <h3>index.html</h3>
   <p>GitHub Pages serves <code>index.html</code> at the root automatically. This one keeps everything inline &mdash; no separate stylesheet, no JavaScript, nothing to break.</p>
@@ -311,11 +318,26 @@ footer p{margin:0}
   </div>
 
   <h3>Create it</h3>
-  <ol class="plain">
-    <li>Open <a href="https://github.com/new" target="_blank" rel="noopener">github.com/new</a></li>
-    <li>Type the folder name into the repository name box</li>
-    <li>Choose <strong>Public</strong> &mdash; Pages on a private repo is a paid feature</li>
-    <li>Click <strong>Create repository</strong></li>
+  <p>
+    Go to <a href="https://github.com/new" target="_blank" rel="noopener">github.com/new</a>
+    and fill in the form.
+  </p>
+
+  <figure>
+    <div class="shot">
+      <img src="shots/05-create-repo.png" alt="The GitHub create a new repository page showing the owner, repository name and description fields, visibility set to Public, and the Add README, Add .gitignore and Add license options all left off." width="1062" height="678">
+    </div>
+    <figcaption>The new repository form &mdash; every option here is a choice you have to make deliberately</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><span class="n">1</span><span>Open <code>github.com/new</code>.</span></li>
+    <li><span class="n">2</span><span>Give the repository a name. Your Pages address will be <code>username.github.io/<em>this name</em>/</code>, so pick something you can live with in a link.</span></li>
+    <li><span class="n">3</span><span>The <strong>Description</strong> is optional and appears on the repo&rsquo;s front page. Write whatever you like.</span></li>
+    <li><span class="n">4</span><span><strong>Visibility</strong> &mdash; choose <strong>Public</strong>. Pages on a private repository is a paid feature, and this is the setting people most often leave on the wrong value.</span></li>
+    <li><span class="n">5</span><span><strong>Add README</strong> &mdash; leave it <strong>off</strong>. This guide has you upload your own <code>index.html</code> in the next step, and a README here just adds a file you don&rsquo;t need.</span></li>
+    <li><span class="n">6</span><span><strong>Add .gitignore</strong> &mdash; leave it as <strong>No .gitignore</strong>. The template picks a language for you, and for a plain static site there&rsquo;s nothing to ignore.</span></li>
+    <li><span class="n">7</span><span><strong>Add license</strong> &mdash; <strong>No license</strong> is fine unless you intend to publish source others reuse.</span></li>
+    <li><span class="n">8</span><span>Click <strong>Create repository</strong>.</span></li>
   </ol>
 
   <div class="ok">
@@ -329,16 +351,32 @@ footer p{margin:0}
 
   <h3>Upload</h3>
   <p>
-    Drag your files onto the empty repo, or click <strong>choose your files</strong>. Then
-    scroll down and <strong>Commit changes</strong>.
+    Open the empty repo, then drag your files in &mdash; or click <strong>Add file</strong> &rarr;
+    <strong>Upload files</strong> and drop them there. Scroll down and <strong>Commit changes</strong>.
   </p>
 
+  <figure>
+    <div class="shot">
+      <img src="shots/06-repo-files.png" alt="The GitHub repository file listing showing an optional images folder, the .nojekyll file, the CNAME file, favicon.svg and index.html at the top level of the repository." width="1062" height="678">
+    </div>
+    <figcaption>What the repository should look like once the files are in</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><span class="n">1</span><span>Your repo&rsquo;s address: <code>github.com/yourusername/yourreponame</code>.</span></li>
+    <li><span class="n">2</span><span>Any <strong>images</strong> folder, if your site uses one. Entirely optional &mdash; a site with no images simply won&rsquo;t have it.</span></li>
+    <li><span class="n">3</span><span><code>.nojekyll</code>. Empty, no extension. Without it, files can silently vanish from the published site &mdash; see step 01.</span></li>
+    <li><span class="n">4</span><span><code>CNAME</code>, added in step 04. Ignore it for now; you can add it later without disturbing anything else.</span></li>
+    <li><span class="n">5</span><span><code>index.html</code>. <strong>This must be the one that gets served.</strong></span></li>
+  </ol>
+
   <div class="warn">
-    <strong>The name has to be exactly right</strong>
-    <p>
-      <code>myfile.html</code> gets you a 404. GitHub only serves the root automatically for
-      the exact lower-case name <code>index.html</code>.
-    </p>
+    <strong>Four things have to be true, and all four are checked</strong>
+    <ul class="plain">
+      <li><strong>Every file is at the top level.</strong> If <code>index.html</code> sits inside a subfolder, the site 404s. In this screenshot it is the last row, level with everything else &mdash; that is correct.</li>
+      <li><strong>The name is exactly <code>index.html</code>.</strong> Not <code>myfile.html</code>, not <code>Index.html</code>. GitHub only serves the root automatically for that exact lower-case name.</li>
+      <li><strong><code>.nojekyll</code> is present and empty.</strong></li>
+      <li><strong>Nothing in the repo that you don&rsquo;t want published.</strong> Whatever is listed above gets served at your domain.</li>
+    </ul>
   </div>
 
   <h3>Or use the command line</h3>
