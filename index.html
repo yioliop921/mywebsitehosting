@@ -29,8 +29,8 @@ a{color:var(--accent)}
 /* cross-references like "see step 01" - must read as clickable */
 .xref{color:var(--accent);font-weight:600;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.18em}
 .xref:hover{background:var(--accent-soft);text-decoration:none;border-radius:3px}
-/* anchor targets clear of the top edge */
-section[id],.trouble[id]{scroll-margin-top:1.5rem}
+/* anchor targets clear of the sticky header (one row on desktop) */
+section[id],.trouble[id]{scroll-margin-top:4.75rem}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
 .skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:.6rem 1rem;font-family:var(--mono)}
 .skip:focus{left:0}
@@ -176,6 +176,8 @@ h1,h2,h3{overflow-wrap:break-word}
 @media(max-width:599px){
   /* balanced split: brand + three links on the first row, the rest on the second */
   .nav-break{display:block;flex:0 0 100%;height:0}
+  /* the header is two rows tall here, so anchors need to clear it */
+  section[id],.trouble[id]{scroll-margin-top:6.5rem}
 }
 
 @media(max-width:400px){
