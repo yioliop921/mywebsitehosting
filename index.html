@@ -46,6 +46,7 @@ header{border-bottom:1px solid var(--line);background:var(--bg);position:sticky;
 .links{display:flex;gap:1.15rem;flex-wrap:wrap}
 .links a{font-family:var(--mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.09em;text-decoration:none;color:var(--muted);padding-bottom:2px;border-bottom:2px solid transparent}
 .links a:hover{color:var(--accent);border-color:var(--accent)}
+.nav-break{display:none}
 
 /* hero */
 .hero{padding-block:clamp(40px,7vw,76px) clamp(24px,4vw,40px)}
@@ -166,10 +167,15 @@ h1,h2,h3{overflow-wrap:break-word}
 
 @media(max-width:700px){
   /* let the nav links flow beside the brand and share out the full width */
-  .nav{justify-content:space-between;align-items:center;column-gap:.7rem;row-gap:.35rem;padding-block:10px}
+  .nav{justify-content:space-between;align-items:center;column-gap:.6rem;row-gap:0;padding-block:10px}
   .links{display:contents}
   .nav .brand{flex:0 0 auto}
-  .links a{flex:1 1 auto;text-align:center}
+  .links a{flex:1 1 0;min-width:max-content;text-align:center;padding-block:.25rem}
+}
+
+@media(max-width:599px){
+  /* balanced split: brand + three links on the first row, the rest on the second */
+  .nav-break{display:block;flex:0 0 100%;height:0}
 }
 
 @media(max-width:400px){
@@ -215,6 +221,7 @@ h1,h2,h3{overflow-wrap:break-word}
       <a href="#start">Start</a>
       <a href="#files">Files</a>
       <a href="#repo">Repo</a>
+      <span class="nav-break" aria-hidden="true"></span>
       <a href="#pages">Pages</a>
       <a href="#dns">DNS</a>
       <a href="#web3">Web3</a>
