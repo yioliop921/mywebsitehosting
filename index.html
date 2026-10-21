@@ -164,6 +164,18 @@ h1,h2,h3{overflow-wrap:break-word}
   .ok,.warn,.trouble,.box{padding:.85rem .95rem}
 }
 
+@media(max-width:700px){
+  /* let the nav links flow beside the brand instead of dropping to their own row */
+  .nav{justify-content:flex-start;align-items:center;column-gap:.7rem;row-gap:.35rem;padding-block:10px}
+  .links{display:contents}
+}
+
+@media(max-width:400px){
+  /* narrowest phones: keep brand + Start/Files/Repo on one row */
+  .nav{column-gap:.55rem}
+  .nav .brand{font-size:.86rem}
+}
+
 @media(max-width:420px){
   :root{--pad:14px}
   body{font-size:15.5px}
